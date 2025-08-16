@@ -1,5 +1,8 @@
+import './db.js';
+
 import express from 'express';
 import cors from 'cors';
+
 import testRoute from './routes/test.route.js';
 import userRoute from './routes/user.route.js';
 
