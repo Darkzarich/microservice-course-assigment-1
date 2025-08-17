@@ -23,7 +23,7 @@ export async function signIn(req, res) {
     return res.status(401).send('Invalid password');
   }
 
-  const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET);
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
   res.send({
     token,

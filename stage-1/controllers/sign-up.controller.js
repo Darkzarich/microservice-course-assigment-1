@@ -19,7 +19,7 @@ export async function signUp(req, res) {
     crypto.createHash('sha512').update(password).digest('hex'),
   ]);
 
-  const token = jwt.sign({ user_id: inserted.rows[0].id }, process.env.JWT_SECRET);
+  const token = jwt.sign({ id: inserted.rows[0].id }, process.env.JWT_SECRET);
 
   res.send({
     token,
