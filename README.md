@@ -6,6 +6,8 @@ The task is to build a monolithic application and then decompose it moving a par
 
 [Swagger documentation](/openapi.json) was provided for this assignment but it was not required to implement all endpoints, only some of them.
 
+Postman collection with all endpoints was created and provided as a part of the assignment in the root directory.
+
 All endpoints having `/dialog` in their path are required to be implemented in the **first stage** and then moved to a new service in the **second stage**.
 
 Although not specified by the assignment, I decided to use [Node.js](https://nodejs.org/en/) for the monolithic application and [Go](https://golang.org/) for the new service.
