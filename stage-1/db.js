@@ -12,8 +12,8 @@ async function initDb() {
   );
   
   CREATE TABLE IF NOT EXISTS messages (
-    "from" INTEGER NOT NULL REFERENCES users(id), 
-    "to" INTEGER NOT NULL REFERENCES users(id), 
+    "from" INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    "to" INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     text TEXT, 
     created_at TIMESTAMP DEFAULT NOW()
   );`

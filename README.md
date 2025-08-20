@@ -12,6 +12,8 @@ All endpoints having `/dialog` in their path are required to be implemented in t
 
 Although not specified by the assignment, I decided to use [Node.js](https://nodejs.org/en/) for the monolithic application and [Go](https://golang.org/) for the new service.
 
+Auth is implemented using [JSON Web Tokens](https://jwt.io/).
+
 ## How to run
 
 Each stage of the assignment has its own directory. `cd` into the directory and run docker-compose file.
