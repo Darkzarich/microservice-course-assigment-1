@@ -1,0 +1,32 @@
+x-common-variables: &common-variables
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+services:
+  db:
+    image: postgres:17-alpine3.22
+    environment:
+      <<: *common-variables
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - course-assignment-1
+  core:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      <<: *common-variables
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      JWT_SECRET: secret
+    depends_on:
+      - db
+    networks:
+      - course-assignment-1
+
+networks:
+  course-assignment-1:
+
+volumes:
+  db-data:

@@ -16,7 +16,7 @@ Auth is implemented using [JSON Web Tokens](https://jwt.io/).
 
 ## How to run
 
-Each stage of the assignment has its own directory. `cd` into the directory and run docker-compose file.
+Each stage of the assignment has its own directory. `cd` into the directory and run docker-compose file that will setup everything needed for the stage.
 
 ```bash
 cd stage-1
@@ -25,6 +25,8 @@ cd stage-2
 
 docker compose up
 ```
+
+Then you can send requests to the application using the provided Postman specification or any other tool you prefer.
 
 ## How to test
 

@@ -21,13 +21,19 @@ async function initDb() {
 }
 
 const pool = new Pool({
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER,
-  host: 'localhost',
   password: process.env.POSTGRES_PASSWORD,
-  port: 5432,
 });
 
+console.debug('Connecting to database...');
+
 export const connection = await pool.connect();
+
+connection.on('connect', () => {
+  console.log('Connected to database');
+});
 
 connection.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
