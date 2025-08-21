@@ -12,19 +12,35 @@ services:
       - db-data:/var/lib/postgresql/data
     networks:
       - course-assignment-1
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $POSTGRES_USER']
+      interval: 10s
+      timeout: 5s
+      retries: 5
   core:
     build: .
-    ports:
-      - 3000:3000
     environment:
       <<: *common-variables
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       JWT_SECRET: secret
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - course-assignment-1
+    deploy:
+      replicas: 3
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '3000:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - course-assignment-1
+    depends_on:
+      - core
 
 networks:
   course-assignment-1:
