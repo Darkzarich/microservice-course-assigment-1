@@ -39,7 +39,7 @@ To easily test the application endpoints locally a [Postman](https://www.postman
 ```mermaid
 architecture-beta
     service client(internet)[Client]
-    service core(server)[Core Backend]
+    service core(server)[Monolithic Backend]
     service db(database)[Database]
 
     client:R -- L:core
@@ -51,8 +51,8 @@ architecture-beta
 ```mermaid
 architecture-beta
     service client(internet)[Client]
-    service core(server)[Core Backend]
-    service dialog(server)[Dialog Backend]
+    service core(server)[Core Service]
+    service dialog(server)[Dialog Service]
     service db(database)[Database]
 
     client:R -- L:core
