@@ -31,3 +31,17 @@ Then you can send requests to the application using the provided Postman specifi
 ## How to test
 
 To easily test the application endpoints locally a [Postman](https://www.postman.com/) collection was provided in the root directory.
+
+## Diagrams
+
+### Stage 1
+
+```mermaid
+architecture-beta
+    service client(internet)[Client]
+    service core(server)[Core Backend]
+    service db(database)[Database]
+
+    client:R <--> L:core
+    core:R <--> L:db
+```
