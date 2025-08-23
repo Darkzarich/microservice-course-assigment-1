@@ -42,6 +42,21 @@ architecture-beta
     service core(server)[Core Backend]
     service db(database)[Database]
 
-    client:R <--> L:core
-    core:R <--> L:db
+    client:R -- L:core
+    core:R -- L:db
+```
+
+### Stage 2
+
+```mermaid
+architecture-beta
+    service client(internet)[Client]
+    service core(server)[Core Backend]
+    service dialog(server)[Dialog Backend]
+    service db(database)[Database]
+
+    client:R -- L:core
+    core:R -- L:db
+    core:B -- T:dialog
+    dialog:B --  B:db
 ```
