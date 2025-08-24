@@ -17,7 +17,7 @@ app.use(express.json({}));
 
 app.use((req, _, next) => {
   // Basic request logging via middleware
-  console.log(`[host=${hostname}] `, req.method, req.path);
+  console.log(`[host=${hostname}] Request received`, req.method, req.path);
   next();
 })
 

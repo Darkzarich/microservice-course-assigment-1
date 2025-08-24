@@ -54,7 +54,7 @@ func listDialogs(w http.ResponseWriter, r *http.Request) error {
 		currentUser.ID, targetUserId,
 	)
 	if err != nil {
-		return fmt.Errorf("database query failed: %w", err)
+		return request.APIError{StatusCode: http.StatusInternalServerError, Message: err.Error()}
 	}
 	defer rows.Close()
 
@@ -62,13 +62,13 @@ func listDialogs(w http.ResponseWriter, r *http.Request) error {
 	for rows.Next() {
 		var msg Message
 		if err := rows.Scan(&msg.From, &msg.To, &msg.Text, &msg.CreatedAt); err != nil {
-			return fmt.Errorf("failed to scan message: %w", err)
+			return request.APIError{StatusCode: http.StatusInternalServerError, Message: err.Error()}
 		}
 		messages = append(messages, msg)
 	}
 
 	if err := rows.Err(); err != nil {
-		return fmt.Errorf("rows error: %w", err)
+		return request.APIError{StatusCode: http.StatusInternalServerError, Message: err.Error()}
 	}
 
 	return request.SendJSON(w, http.StatusOK, messages)
@@ -92,15 +92,13 @@ func sendMessage(w http.ResponseWriter, r *http.Request) error {
 	var message SentMessage
 
 	if err := json.NewDecoder(r.Body).Decode(&message); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-
 		return request.APIError{StatusCode: http.StatusBadRequest, Message: err.Error()}
 	}
 
 	_, err = db.Exec(r.Context(), `INSERT INTO messages ("from", "to", text) VALUES ($1, $2, $3)`, currentUser.ID, targetUserId, message.Text)
 
 	if err != nil {
-		return fmt.Errorf("database query failed: %w", err)
+		return request.APIError{StatusCode: http.StatusInternalServerError, Message: err.Error()}
 	}
 
 	return request.SendJSON(w, http.StatusCreated, SentMessage{Text: message.Text})
