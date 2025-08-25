@@ -6,7 +6,7 @@ import cors from 'cors';
 import { indexRouter } from './routes/index.route.js';
 
 const hostname = process.env.HOSTNAME;
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -24,5 +24,5 @@ app.use((req, _, next) => {
 app.use(indexRouter);
 
 app.listen(port, () => {
-  console.log(`[host=${hostname}] Server is running on port 3000`);
+  console.log(`[host=${hostname}] Server is running on port ${port}`);
 });

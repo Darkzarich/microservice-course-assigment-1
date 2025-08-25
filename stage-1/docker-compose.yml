@@ -19,7 +19,7 @@ services:
     environment:
       <<: *common-variables
       POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
+      PGPORT: 5432
       JWT_SECRET: secret
     depends_on:
       - db

@@ -42,9 +42,9 @@ func InitConfig() (*Config, error) {
 	hostname := getEnv("HOSTNAME", defaultHostname)
 	jwtSecret := getEnv("JWT_SECRET", defaultJWTSecret)
 	postgresHost := getEnv("POSTGRES_HOST", defaultPostgresHost)
-	postgresPort, err := strconv.ParseUint(getEnv("POSTGRES_PORT", strconv.Itoa(defaultPostgresPort)), 10, 16)
+	postgresPort, err := strconv.ParseUint(getEnv("PGPORT", strconv.Itoa(defaultPostgresPort)), 10, 16)
 	if err != nil {
-		return nil, fmt.Errorf("invalid POSTGRES_PORT: %w", err)
+		return nil, fmt.Errorf("invalid PGPORT: %w", err)
 	}
 	postgresUser := getEnv("POSTGRES_USER", defaultPostgresUser)
 	postgresPass := getEnv("POSTGRES_PASSWORD", defaultPostgresPass)
