@@ -1,0 +1,44 @@
+x-common-variables: &common-variables
+  POSTGRES_HOST: db
+  PGPORT: 5433
+  POSTGRES_DB: assignment_1
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  JWT_SECRET: secret
+
+services:
+  db:
+    image: postgres:17-alpine3.22
+    environment:
+      <<: *common-variables
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - course-assignment-1
+  core:
+    build: ./core_service
+    ports:
+      - 3000:3000
+    environment:
+      <<: *common-variables
+      DIALOG_SERVICE_URL: http://dialog:3000
+    depends_on:
+      - db
+    networks:
+      - course-assignment-1
+  dialog:
+    build: ./dialog_service
+    ports:
+      - 3001:3000
+    environment:
+      <<: *common-variables
+    depends_on:
+      - db
+    networks:
+      - course-assignment-1
+
+networks:
+  course-assignment-1:
+
+volumes:
+  db-data:
