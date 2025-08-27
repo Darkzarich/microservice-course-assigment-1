@@ -13,8 +13,14 @@ services:
       <<: *common-variables
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./database-init.sql:/docker-entrypoint-initdb.d/database-init.sql
     networks:
       - course-assignment-1
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER']
+      interval: 10s
+      timeout: 5s
+      retries: 5
   core:
     build: ./core_service
     ports:
@@ -23,7 +29,8 @@ services:
       <<: *common-variables
       DIALOG_SERVICE_URL: http://dialog:3000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - course-assignment-1
   dialog:
@@ -33,7 +40,8 @@ services:
     environment:
       <<: *common-variables
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - course-assignment-1
 
